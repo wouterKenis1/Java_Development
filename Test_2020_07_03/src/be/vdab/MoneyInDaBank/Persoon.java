@@ -3,6 +3,8 @@ package be.vdab.MoneyInDaBank;
 import java.util.Set;
 
 public class Persoon {
+    private double cash = 0;
+
     private Rekening[] rekeningen;
 
     public Rekening[] getRekeningen() {
@@ -20,5 +22,26 @@ public class Persoon {
         }
         newRekeningen[newRekeningen.length - 1] = rekening;
         rekeningen = newRekeningen;
+    }
+
+    public void chargeRekening(Rekening rekening, double amount){
+        cash -= amount;
+        rekening.recieveMoney(amount);
+    }
+
+    public void getMoneyFromRekening(Rekening rekening, double amount){
+        if(rekening instanceof ZichtRekening){
+            ((ZichtRekening) rekening).doGeldophaling(amount);
+            cash += amount;
+        }
+    }
+
+
+    public double getCash() {
+        return cash;
+    }
+
+    public void setCash(double cash) {
+        this.cash = cash;
     }
 }

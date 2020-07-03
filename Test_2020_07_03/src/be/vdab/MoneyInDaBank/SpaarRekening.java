@@ -21,4 +21,8 @@ public class SpaarRekening extends Rekening{
             other.recieveMoney(amount);
         }
     }
+
+    public void doInterest(double interestRate) {
+        geldbalans += geldbalans*interestRate;
+    }
 }

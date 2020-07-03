@@ -7,4 +7,7 @@ public class ZichtRekening extends  Rekening{
         geldbalans -= amount;
         other.recieveMoney(amount);
     }
+    public void doGeldophaling(double amount){
+        geldbalans -= amount;
+    }
 }
