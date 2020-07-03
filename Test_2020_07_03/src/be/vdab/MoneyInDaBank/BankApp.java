@@ -31,5 +31,16 @@ public class BankApp {
         rekeningen[3] = janSpaar1;
 
 
+        // in order to use this program correctly, run this section exactly once a day
+        Calendar calendar = Calendar.getInstance();
+        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+        if(dayOfYear == 1) {
+            System.out.println("It's the first on January. Interest day!");
+            for(Rekening r : rekeningen){
+                if(r instanceof  SpaarRekening){
+                    ((SpaarRekening)r).doInterest(0.01); // 1% interest
+                }
+            }
+        }
     }
 }
