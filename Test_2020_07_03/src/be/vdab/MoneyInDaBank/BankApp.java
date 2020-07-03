@@ -1,8 +1,13 @@
 package be.vdab.MoneyInDaBank;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class BankApp {
     static private Rekening[] rekeningen;
     static private Persoon[] klanten;
+
 
     public static void main(String[] args) {
         rekeningen = new Rekening[100];
@@ -24,7 +29,6 @@ public class BankApp {
         rekeningen[1] = janZicht2;
         rekeningen[2] = janZicht3;
         rekeningen[3] = janSpaar1;
-
 
 
     }
