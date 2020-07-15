@@ -1,16 +1,23 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class App  {
+public class App implements ActionListener {
+
+   private JokeWindow jWindow;
 
    public static void main(String[] args) {
-      Window frame = new Window();
+      // make dao for beers
       BeerDAO beerDao = new BeerDAO();
-
+      // set the connection variables for the dao
       beerDao.setUrl(STATICS.URL);
       beerDao.setUser(STATICS.USER);
       beerDao.setPass(STATICS.PASS);
 
+      // make a window
+      Window frame = new Window();
+      // set the sta
       frame.setSize(1024,768);
       frame.createGUI();
       frame.setTitle("First test of GUI - Title");
@@ -29,8 +36,19 @@ public class App  {
       }
 
       JButton button = new JButton("text");
-
       frame.add(button);
       frame.setVisible(true);
+
+      jWindow = new JokeWindow(this);
+
+   }
+
+   @Override
+   public void actionPerformed(ActionEvent e) {
+      if(jWindow.JOKECOUNT < 5){
+         jWindow = null;
+         jWindow = new JokeWindow(this);
+      }
+
    }
 }

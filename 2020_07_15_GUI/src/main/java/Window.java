@@ -17,12 +17,10 @@ public class Window extends JFrame implements KeyListener {
         bt.addKeyListener(this);
     }
 
-
     @Override
     public void keyTyped(KeyEvent e) {
         System.out.println("Key Typed: " + e.getKeyChar() );
         bt.setText("Key Typed: " + e.getKeyChar() );
-
     }
 
     @Override
