@@ -1,0 +1,19 @@
+.parent { /* main-axis is horizontal, cross-axis is vertical */
+width: 50rem;
+border: 0.2rem dashed black;
+background-color: rgba(1.0,0.0,0.0,0.1);
+
+display: flex; /* can also use inline-flex */
+flex-wrap: wrap;
+flex-direction: row;
+justify-content: start;
+}
+
+.a{ background-color: red; height: 1rem; width: 10rem;}
+.b{ background-color: blue; height: 1.5rem; width:15rem;}
+.c{ background-color: green; height: 2rem; width 20rem;}
+.d{ background-color: yellow; height: 2.5rem; width: 24rem;}
+.e{ background-color: cyan; height: 1rem; width: 10rem;}
+.f{ background-color: pink; height: 1.5rem; width: 15rem;}
+
+
