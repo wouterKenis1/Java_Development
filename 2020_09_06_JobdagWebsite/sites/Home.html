@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chars & Coffee - Home</title>
+    <meta name="author" content="Wouter Kenis">
+    <link rel="stylesheet" type="text/css" href="../styles/Home.css">
+</head>
+<body>
+<header>
+    <img src="../resources/cards.png" alt="Logo">
+    <ul>
+        <li>
+            <a href="Home.html" alt="Home"> Home</a>
+        </li>
+        <li>
+            <a href="About.html" alt="About us">About us</a>
+        </li>
+        <li>
+            <a href="Work.html" alt="Our work">Our work</a>
+        </li>
+        <li>
+            <a href="Contact.html" alt="Contact ">Contact</a>
+        </li>
+    </ul>
+    <hr/>
+</header>
+
+<div class="Cursist-Container">
+    <table border="1">
+        <tr >
+            <td width="180" height="200">
+                <div class="Cursist">
+                    Wouter Kenis<br/>
+                    <img src="../resources/Foto.png" width="100" height="200" alt="Foto.png"><br/>
+                    <p>
+                        This is my elevator pitch.<br/>
+                        I wrote it myself.<br/>
+                    </p>
+                    <button type="button" class="accordion">Learn more</button>
+                    <div class="panel">
+                        link to github<br/>
+                        adress<br/>
+                        other fun stuff<br/>
+                    </div>
+                </div>
+            </td>
+
+            <td width="180" height="200">
+                <div class="Cursist">
+                    Thomas Goos<br/>
+                    <img src="../resources/Foto2.png" width="100" height="200" alt="Foto2.png"><br/>
+                    <p>
+                        This is my elevator pitch.<br/>
+                        I wrote it myself.<br/>
+                    </p>
+                    <button type="button" class="accordion">Learn more</button>
+                    <div class="panel">
+                        link to github<br/>
+                        adress<br/>
+                        other fun stuff<br/>
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+        <tr>
+
+            <td width="180" height="200">
+                <div class="Cursist">
+                    Marc<br/>
+                    <img src="../resources/Foto.png" width="100" height="200" alt="Foto.png"><br/>
+                    <p>
+                        This is my elevator pitch.<br/>
+                        I wrote it myself.<br/>
+                    </p>
+                    <button type="button" class="accordion">Learn more</button>
+                    <div class="panel">
+                        link to github<br/>
+                        adress<br/>
+                        other fun stuff<br/>
+                    </div>
+                </div>
+            </td>
+
+            <td width="180" height="200">
+                <div class="Cursist">
+                    Klaas<br/>
+                    <img src="../resources/Foto2.png" width="100" height="200" alt="Foto2.png"><br/>
+                    <p>
+                        This is my elevator pitch.<br/>
+                        I wrote it myself.<br/>
+                    </p>
+                    <button type="button" class="accordion">Learn more</button>
+                    <div class="panel">
+                        link to github<br/>
+                        adress<br/>
+                        other fun stuff<br/>
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+    </table>
+</div>
+
+
+</body>
+</html>
+
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+</script>
