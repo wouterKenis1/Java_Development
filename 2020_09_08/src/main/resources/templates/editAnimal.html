@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+you are editing an animal
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Species</th>
+        <th>Food Type</th>
+        <th>Last Eaten</th>
+    </tr>
+    <tr>
+        <td th:text="${{animalFromList.name}}"></td>
+        <td th:text="${{animalFromList.species}}"></td>
+        <td th:text="${{animalFromList.foodType}}"></td>
+        <td th:text="${{animalFromList.lastEaten}}"></td>
+   </tr>
+</table>
+
+<form th:action="@{/Animal/{name}/editAnimal(name=${animalFromList.name})}" method="post">
+    <input type="submit" > <br/>
+    <label>name</label> <input type="text" name="name" th:value="${{animalFromList.name}}" readonly><br/>
+    <label>species</label> <select name="species" th:selected="${{animalFromList.species}}" required>
+        <option value="BIRD">BIRD</option>
+        <option value="CAT">CAT</option>
+        <option value="DOG">DOG</option>
+        <option value="TIGER">TIGER</option>
+        <option value="LION">LION</option>
+        <option value="WOLF">WOLF</option>
+    </select><br/>
+   <label>foodType</label> <select name="foodType" th:selected="${{animalFromList.foodType}}" required>
+        <option value="Herbivore">Herbivore</option>
+        <option value="Carnivore">Carnivore</option>
+        <option value="Omnivore">Omnivore</option>
+    </select><br/>
+    <label>last eaten</label> <input type="text" name="lastEaten" th:value="${{animalFromList.lastEaten}}"><br/>
+
+</form>
+</body>
+</html>

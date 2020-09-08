@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring MVC Hello World</title>
+</head>
+
+<body>
+<h2>All Employees in System</h2>
+
+<table border="1">
+    <tr>
+        <th>Employee Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+    </tr>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${{employee.id}}">id</td>
+        <td th:text="${{employee.firstName}}">first name</td>
+        <td th:text="${{employee.lastName}}">last name</td>
+    </tr>
+</table>
+
+
+
+<a href="add"> add employee</a>
+</body>
+</html>

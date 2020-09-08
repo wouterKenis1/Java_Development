@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring MVC Hello World</title>
+</head>
+
+<body>
+<h2>All Animals in Zoo</h2>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Species</th>
+        <th>Food Type</th>
+        <th>Last Eaten</th>
+        <th colspan="2">Action</th>
+    </tr>
+    <tr th:each="animal : ${animals}">
+        <td th:text="${{animal.name}}"></td>
+        <td th:text="${{animal.species}}"></td>
+        <td th:text="${{animal.foodType}}"></td>
+        <td th:text="${{animal.lastEaten}}"></td>
+        <td> <a type="button" th:href="@{/Animal/{name}/editAnimal(name=${animal.name})}">edit</a></td>
+        <td> <a type="button" th:href="@{/Animal/{name}/deleteAnimal(name=${animal.name})}">del</a></td>
+    </tr>
+</table>
+
+
+</body>
+</html>
