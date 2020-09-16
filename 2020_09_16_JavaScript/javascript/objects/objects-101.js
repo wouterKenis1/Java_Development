@@ -22,7 +22,7 @@ console.log(`${myBook.title} by ${myBook.author}`)
 // increase age by 1 and print again
 console.clear();
 
-let person = {
+let me = {
     name: "Wouter",
     age: 23,
     location: "Mechelen",
@@ -32,9 +32,9 @@ let printPerson = function(person){
     console.log(`${person.name} is ${person.age} and lives in ${person.location}`);
 }
 
-printPerson(person);
-person.age++;
-printPerson(person);
+printPerson(me);
+me.age++;
+printPerson(me);
 
 
 
