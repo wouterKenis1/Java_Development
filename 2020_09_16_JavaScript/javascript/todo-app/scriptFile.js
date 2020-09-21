@@ -40,6 +40,7 @@ const renderTodos = function(todos,filters){
         filteredTodos = todos.filter(function(todo){
             return todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
     });
+    console.log(filteredTodos);
 }
     // clear the div element
     document.querySelector("#todos").innerHTML = "";
@@ -48,7 +49,7 @@ const renderTodos = function(todos,filters){
     p.textContent = `you have ${incompleteTodos.length} todos left.`;
     document.querySelector("#todos").appendChild(p);
     // div element << todos
-    incompleteTodos.forEach(function(todo){
+    filteredTodos.forEach(function(todo){
         const paragraph = document.createElement("p");
         paragraph.textContent = todo.text;
         document.querySelector("#todos").appendChild(paragraph);
