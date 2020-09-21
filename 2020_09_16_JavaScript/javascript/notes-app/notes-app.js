@@ -68,18 +68,30 @@ document.querySelector("#create-note").addEventListener("click",function(e){
     console.log(e);
     e.target.textContent = "The button was clicked";
 });
-document.querySelector("#remove-all").addEventListener("click",function(e){
-    document.querySelectorAll(".note").forEach(function(note){
-        note.remove();
-    });
-});
+//document.querySelector("#remove-all").addEventListener("click",function(e){
+//    document.querySelectorAll(".note").forEach(function(note){
+//        note.remove();
+//    });
+//});
 
 document.querySelector("#text-search").addEventListener("input",function(e){
     filters.searchText = e.target.value;
     renderNotes(notes,filters);
 });
 
-document.querySelector("#text-create").addEventListener("input",function(e){
-    console.log(e);
-    logNewNote();
+//document.querySelector("#text-create").addEventListener("input",function(e){
+//    console.log(e);
+//    logNewNote();
+//});
+
+
+//document.querySelector("#name-form").addEventListener("submit",function(e){
+//    e.preventDefault();
+//    console.log(e.target.elements.firstName.value);
+//    e.target.elements.firstName.value = "";
+//});
+
+document.querySelector("#for-fun").addEventListener("change",function(e){
+    console.log(e.target.checked);
+
 });

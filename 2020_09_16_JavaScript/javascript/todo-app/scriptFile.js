@@ -24,15 +24,23 @@ const filters = {
 searchText: "",
 
 }
+let hideCompleted = false;
 
 const renderTodos = function(todos,filters){
     const incompleteTodos = todos.filter(function(todo){
-    return !todo.completed;
+        return !todo.completed;
     });
-    const filteredTodos = incompleteTodos.filter(function(todo){
-        return todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
+    let filteredTodos;
+    if(hideCompleted){
+        filteredTodos = incompleteTodos.filter(function(todo){
+            return todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
+        });
+    }
+    else{
+        filteredTodos = todos.filter(function(todo){
+            return todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
     });
-
+}
     // clear the div element
     document.querySelector("#todos").innerHTML = "";
     // div element << you have x todos left
@@ -66,28 +74,56 @@ renderTodos(todos,filters);
 //    p.textContent = todo.text;
 //    document.querySelector("body").appendChild(p);
 //});
-
-// todo-add button
-document.querySelector("#todo-add").addEventListener("click",function(e){
-    console.log("Adding Todo");
-
-});
+//
+//// todo-add button
+//document.querySelector("#todo-add").addEventListener("click",function(e){
+//    console.log("Adding Todo");
+//
+//});
 
 // todo-text-search button
 document.querySelector("#todo-text-search").addEventListener("input",function(e){
     filters.searchText = e.target.value;
     renderTodos(todos,filters);
 });
+//
+//// new-todo-text button
+//document.querySelector("#todo-text-new").addEventListener('input',function(e){
+//    console.log(e.target.value);
+//
+//});
 
-// new-todo-text button
-document.querySelector("#todo-text-new").addEventListener('input',function(e){
-    console.log(e.target.value);
+// ----- 7-12 -----
 
+// create form w/ todo text
+// setup submit handler & cancel default
+// add a new item to todos w/ text data
+// render app
+// clear input field
+
+document.querySelector("#todo-create-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    todo = {
+         text: e.target.elements.todoText.value,
+         completed: false,
+    };
+    todos.push(todo);
+    renderTodos(todos,filters);
+    e.target.elements.todoText.value = "";
 });
 
+// ----- 7-13 -----
+
+// create checkbox w/ listener -> "hide completed"
+// create hideCompleted filter
+// update hideCompleted on checkbox
+// setup renderTodos
 
 
-
+document.querySelector("#todo-checkbox-completed").addEventListener("change",function(e){
+    hideCompleted = e.target.checked;
+    renderTodos(todos,filters);
+})
 
 
 

@@ -6,14 +6,22 @@
 </head>
 <body>
     <h1>Todo's</h1>
-    <input id="todo-text-new" type="text" placeholder="Write your todo here">
-    <button id="todo-add">Add Todo</button><br/><br/>
+<!--    <input id="todo-text-new" type="text" placeholder="add your todo here">-->
+<!--    <button id="todo-add">Add Todo</button><br/><br/>-->
 
-    <input id="todo-text-search" type="text" placeholder="Write your todo here">
-
+    <input id="todo-text-search" type="text" placeholder="search your todo here">
+    <label>
+    <input type="checkbox" id="todo-checkbox-completed"> List completed todos
+    </label>
     <div id="todos">
 
     </div>
+
+    <form id="todo-create-form">
+        <input type="text" name="todoText" placeholder="Add your todo here">
+        <button>Submit</button>
+    </form>
+
 
 <script src="scriptFile.js"></script>
 </body>
