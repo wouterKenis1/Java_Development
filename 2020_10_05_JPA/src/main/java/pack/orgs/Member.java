@@ -16,7 +16,7 @@ public class Member {
             name = "ORG_MEMBER",
             joinColumns = @JoinColumn(name = "MEM_ID"),
             inverseJoinColumns = @JoinColumn(name = "ORG_ID"))
-    private Set<Organization> organizations = new HashSet<>();
+    private Set<Organisation> organisations = new HashSet<>();
 
     public long getId() {
         return id;
@@ -30,11 +30,11 @@ public class Member {
         this.name = name;
     }
 
-    public Set<Organization> getOrganizations() {
-        return organizations;
+    public Set<Organisation> getOrganisations() {
+        return organisations;
     }
 
-    public void setOrganizations(Set<Organization> organizations) {
-        this.organizations = organizations;
+    public void setOrganisations(Set<Organisation> organisations) {
+        this.organisations = organisations;
     }
 }

@@ -19,10 +19,15 @@ public class SaveReader {
             tx.begin();
 
             Reader reader1 = new Reader();
+            reader1.setName("Wouter");
             Magazine magazine1 = new Magazine();
+            magazine1.setTitle("Eragon");
             Magazine magazine2 = new Magazine();
+            magazine2.setTitle("Eldest");
             Magazine magazine3 = new Magazine();
+            magazine3.setTitle("Brisingr");
             Magazine magazine4 = new Magazine();
+            magazine4.setTitle("Inheritance");
 
             Set<Magazine> magazines = new HashSet<>();
             magazines.add(magazine1);
