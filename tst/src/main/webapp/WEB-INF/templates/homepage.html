@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8">
+    <title>Elementals</title>
+    <meta name="Wouter" content="creator">
+    <style th:src="@{/css/css/style.css}"></style>
+    <style th:src="@{/css/bootstrap.css}"></style>
+    <style th:src="@{/css/bootstrap-grid.css}"></style>
+    <style th:src="@{/css/bootstrap-reboot.css}"></style>
+
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 120px;
+        }
+
+        .left {
+
+            left: 0;
+        }
+
+        .right {
+            right: 0;
+        }
+
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    </style>
+</head>
+
+
+<body>
+<h1>Welcome to the homepage!</h1>
+
+    <div class="split left">
+        <div id="elements"></div>
+    </div>
+    <div class="split right">
+        <p>
+            Choose 2 elements to combine and push the button to find out their combination
+        </p>
+        <p>
+            you have chosen <span id = "element1"></span> and <span id="element2"></span>
+        </p>
+        <br/>
+        
+        <form action="/home" method="post" name="submitEquation">
+            <label>name1</label><input type="text" name="name1" id="FormElement1"><br/>
+            <label>name2</label><input type="text" name="name2" id="FormElement2"><br/>
+            <input type="submit"><br/>
+        </form>
+
+        <table>
+            <tr>
+                <th>Name</th>
+            </tr>
+            <tr th:each="elementfromJava : ${elementsFromJava}">
+<                <td th:text="${{elementfromJava.name}}" name="newElement"></td>
+            </tr>
+        </table>
+
+        <table hidden="true">
+            <tr>
+                <th>index</th>
+                <th>Name</th>
+            </tr>
+            <tr th:each="databaseElement : ${databaseElements}" name="databaseData">
+                <td th:text="${{databaseElement.id}}"></td>
+                <td th:text="${{databaseElement.name}}"></td>
+
+            </tr>
+        </table>
+    </div>
+
+</body>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/js/functions.js}"></script>
+    <script th:src="@{/js/js/app.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let combinationElements;
+        let combinationElement;
+
+        var flag = [[${boolElementAdded}]];
+        console.log(flag);
+        window.onload = function() {
+            if(!flag){
+                return; // Exit/Return if the variable is false
+            }
+            console.log("CombinationElement Detected"); // Call your favourite method if the variable is true
+            combinationElements = [[${elementsFromJava}]];
+            combinationElement = combinationElements[0];
+            let id = combinationElement["id"];
+            let name = combinationElement["name"];
+            console.log({id,name});
+
+            // avoid duplicate elements
+            elements = getSavedElements();
+            for(let x = 0; x < elements.length;x++){
+                let element = elements[x];
+                console.log(element);
+                if(element["id"] == id){
+                    return
+                }
+            }
+                elements.push({id,name});
+                setSavedElements(elements);
+                renderElements(elements);
+        };
+        /*]]>*/
+    </script>
+
+</html>

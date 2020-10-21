@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Java Potentials - Home</title>
+    <meta name="Wouter" content="Author Html">
+    <meta name="Maxim" content="Author SpringFunctionality">
+    <meta name="Kevin" content="Author Bootstrap">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/navbar.css}" rel="stylesheet">
+    <link th:href="@{/css/countdown.css}" rel="stylesheet">
+    <link th:href="@{/css/masthead.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+    <div th:insert="fragments/navbar :: navbar"></div>
+        <br>
+    <div th:insert="fragments/masthead :: masthead"></div>
+    <div th:insert="fragments/pageContent :: content"></div>
+    <div th:insert="fragments/studentCards :: content"></div>
+        <br>
+    <div th:insert="fragments/pageContent3 :: content"></div>
+    <div th:insert="fragments/countdown :: countdown"></div>
+    <div th:insert="fragments/voordelen :: voordelen"></div>
+    <div th:insert="fragments/contact :: contact"></div>
+    </div>
+    <div th:insert="fragments/footer :: footer"></div>
+</body>
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/masthead.js}"></script>
+    <script th:src="@{/js/countdown.js}"></script>
+    <script th:src="@{/js/javascript.js}"></script>
+</html>
