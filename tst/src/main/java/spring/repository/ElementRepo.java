@@ -2,9 +2,11 @@ package spring.repository;
 
 import org.springframework.context.annotation.Bean;
 import spring.model.Element;
+import spring.model.Equation;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,7 +23,6 @@ public class ElementRepo {
             em.persist(element);
             tx.commit();
             System.out.println("elements saved!");
-
         } finally{
             if(em != null){
                 em.close();
@@ -45,7 +46,12 @@ public class ElementRepo {
             em = emf.createEntityManager();
             EntityTransaction tx = em.getTransaction();
             tx.begin();
-            em.remove(element);
+
+            String sql = "delete from Element e where e.id = :id";
+            Query query = em.createQuery(sql);
+            query.setParameter("id",element.getId());
+            query.executeUpdate();
+
             tx.commit();
             System.out.println("element deleted!");
 
@@ -175,7 +181,7 @@ public class ElementRepo {
         return outElement;
     }
 
-    public Element findCombinationElementByName(String name1, String name2){
+    public Element findPublicCombinationElementByName(String name1, String name2){
         EntityManagerFactory emf = null;
         EntityManager em = null;
         Element outElement = null;
@@ -186,7 +192,7 @@ public class ElementRepo {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
 
-            String sql = "select e.child from Equation e where e.parent1.name = :firstName AND e.parent2.name = :secondName";
+            String sql = "select e.child from Equation e where e.parent1.name = :firstName AND e.parent2.name = :secondName AND e.isPublic = true";
             TypedQuery<Element> query = em.createQuery(sql,Element.class);
 
             query.setParameter("firstName",name1);
@@ -214,5 +220,47 @@ public class ElementRepo {
         }
         return outElement;
     }
+
+    public List<Element> findCombinationElementByName(String name1, String name2){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        List<Element> results = new ArrayList<>();
+
+        try {
+            emf = Persistence.createEntityManagerFactory("mysqlcontainer");
+            em = emf.createEntityManager();
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+
+            String sql = "select e.child from Equation e where e.parent1.name = :firstName AND e.parent2.name = :secondName ";
+            TypedQuery<Element> query = em.createQuery(sql,Element.class);
+
+            query.setParameter("firstName",name1);
+            query.setParameter("secondName",name2);
+            results = query.getResultList();
+
+            query.setParameter("firstName",name2);
+            query.setParameter("secondName",name1);
+            List<Element> results2 = query.getResultList();
+            for(Element e : results2){
+                if(!results.contains(e)){
+                    results.add(e);
+                }
+            }
+
+
+            tx.commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+            if (emf != null) {
+                emf.close();
+            }
+        }
+
+        return results;
+    }
+
 
 }

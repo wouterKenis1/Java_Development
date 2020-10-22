@@ -1,11 +1,8 @@
 package spring.model;
 
-import spring.threads.ElementThread;
 import spring.threads.EquationThread;
 
 import javax.persistence.*;
-import java.math.BigInteger;
-import java.sql.Timestamp;
 
 @Entity
 public class Equation {
@@ -21,22 +18,30 @@ public class Equation {
     private Element parent2;
     @OneToOne
     private Element child;
-    @Column(name = "birthTime")
-    private BigInteger birthTime;
     @Column(name = "voteCount")
     private int voteCount;
     @Column(name = "newElement")
     private boolean newElement;
-    @Column(name = "consensus")
-    private int consensus;
-    @Column(name = "publicBirthTime")
-    private BigInteger publicBirthTime;
+    @Column(name = "public")
+    private boolean isPublic = false;
+    @Transient
+    private boolean checkVotes = true;
     // endregion
 
     // region constructors
     public Equation(){
-//        EquationThread eThread = new EquationThread(this);
-//        eThread.start();
+    }
+
+    public Equation(boolean checkVotes){
+        this.checkVotes = checkVotes;
+        if(checkVotes){
+            isPublic = false;
+            EquationThread eThread = new EquationThread(this);
+            eThread.start();
+        }
+        else{
+            isPublic = true;
+        }
     }
 
     //endregion
@@ -44,6 +49,11 @@ public class Equation {
     // region getters and setters
     public int getId() {
         return id;
+    }
+
+    public Equation setId(int id) {
+        this.id = id;
+        return this;
     }
 
     public Element getParent1() {
@@ -73,15 +83,6 @@ public class Equation {
         return this;
     }
 
-    public BigInteger getBirthTime() {
-        return birthTime;
-    }
-
-    public Equation setBirthTime(BigInteger birthTime) {
-        this.birthTime = birthTime;
-        return this;
-    }
-
     public int getVoteCount() {
         return voteCount;
     }
@@ -100,38 +101,39 @@ public class Equation {
         return this;
     }
 
-    public int getConsensus() {
-        return consensus;
+    public boolean isCheckVotes() {
+        return checkVotes;
     }
 
-    public Equation setConsensus(int consensus) {
-        this.consensus = consensus;
+    public Equation setCheckVotes(boolean checkVotes) {
+        this.checkVotes = checkVotes;
         return this;
     }
 
-    public BigInteger getPublicBirthTime() {
-        return publicBirthTime;
+    public boolean isPublic() {
+        return isPublic;
     }
 
-    public Equation setPublicBirthTime(BigInteger publicBirthTime) {
-        this.publicBirthTime = publicBirthTime;
+    public Equation setPublic(boolean aPublic) {
+        isPublic = aPublic;
         return this;
     }
     // endregion
+
+    public void addVote(){
+        voteCount++;
+    }
 
 
     @Override
     public String toString() {
         return "Equation{" +
                 "id=" + id +
-//                ", parent1=" + parent1.getId() +
-//                ", parent2=" + parent2.getId() +
-//                ", child=" + child.getId() +
-                ", birthTime=" + birthTime +
-                ", voteCount=" + voteCount +
+                ", parent1=" + parent1 +
+                ", parent2=" + parent2 +
+                ", child=" + child +
                 ", newElement=" + newElement +
-                ", consensus=" + consensus +
-                ", publicBirthTime=" + publicBirthTime +
+                ", votes=" + voteCount +
                 '}';
     }
 

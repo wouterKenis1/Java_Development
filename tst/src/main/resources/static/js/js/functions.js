@@ -36,12 +36,8 @@ const getElementsFromDatabaseElement = function(){
     setSavedElements(elements)
 }
 
-
-
-
 let element1 = elements[0];
 let element2 = elements[0];
-
 
 const getSavedElements = function(){
     const elementsJSON = localStorage.getItem("elements");
@@ -119,6 +115,7 @@ const renderElement1 = function(){
     //console.log(document.getElementById("FormElement1"));
     document.getElementById("FormElement1").setAttribute("value",element1.name);
 }
+
 const generateSpanElement2 = function(){
     const objText = document.createElement("span");
     objText.setAttribute("value",element2.name);
@@ -132,10 +129,6 @@ const renderElement2 = function(){
     document.getElementById("FormElement2").setAttribute("value",element2.name);
 }
 
-const submitPage = function(){
-    let form = document.getElementById("submitEquation");
-    form.submit();
-    form.reset();
-}
+
 
 

@@ -18,9 +18,23 @@
         <input type="submit"><br/>
     </form>
 
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Vote</th>
+        </tr>
+        <tr th:each="possibleCombination : ${possibleCombinations}">
+            <td th:text="${{possibleCombination.id}}" name="id"></td>
+            <td th:text="${{possibleCombination.child.name}}" name="name"></td>
+        </tr>
+    </table>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script th:src="@{/js/bootstrap.js}"></script>
 <script th:src="@{/js/js/functions.js}"></script>
 <script th:src="@{/js/js/app.js}"></script>
+<script th:src="@{/js/js/functions2.js}"></script>
+
 </html>
