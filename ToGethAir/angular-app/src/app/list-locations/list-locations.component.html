@@ -1,0 +1,31 @@
+<p>list-locations works!</p>
+
+<!--<ul>-->
+<!--  <li *ngFor="let location of locations">-->
+<!--    <table>-->
+<!--      -->
+<!--      <tr> Name = {{location.name}}</tr>-->
+<!--      <tr> Country = {{location.country}}</tr>-->
+<!--      <tr> Region = {{location.region}}</tr>-->
+<!--      <tr> Code = {{location.code}}</tr>-->
+<!--    </table>-->
+<!--  </li>-->
+
+
+<!--</ul>-->
+
+<table border="3">
+  <tr>
+    <th>Name</th>
+    <th>Country</th>
+    <th>Region</th>
+    <th>Code</th>
+  </tr>
+  <tr *ngFor="let location of locations">
+  <th> {{location.name}}</th>
+  <th> {{location.country}}</th>
+  <th> {{location.region}}</th>
+  <th> {{location.code}}</th>
+  </tr>
+
+</table>
