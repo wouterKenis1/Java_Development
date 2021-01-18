@@ -1,0 +1,17 @@
+<form (submit)="submit(locationCode.valueAsNumber,locationName.value,locationCountry.value,locationRegion.value)">
+  <table border="3">
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>Region</th>
+    </tr>
+    <tr>
+      <th><input type="number" #locationCode>  </th>
+      <th><input type="text" #locationName>  </th>
+      <th><input type="text" #locationCountry>  </th>
+      <th><input type="text" #locationRegion>  </th>
+    </tr>
+  </table>
+  <button>submit</button>
+</form>

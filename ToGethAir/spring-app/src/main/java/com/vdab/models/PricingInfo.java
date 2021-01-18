@@ -12,6 +12,8 @@ public class PricingInfo {
 //    Map<Integer,Float> promotions;  // seats, discount (in %)
     Vector<Pair<Integer,Float>> promotions;
     public float baseRate = 5.0f;   // default 5% increase from basePrice
+    public boolean hasOverride = false;
+    public float overrideAmount;
 
     public Map<String, Float> getBasePrices() {
         return basePrices;
@@ -23,6 +25,31 @@ public class PricingInfo {
 
     public Vector<Pair<Integer,Float>> getPromotions() {
         return promotions;
+    }
+
+    public Float getBestPromotion(int seatAmount){
+        if(hasOverride){
+           return 0.0f;
+        }
+        if(seatAmount == 0 || promotions.size() == 0){
+            return 0.0f;
+        }
+        if(seatAmount < promotions.get(0).getKey()){
+            return 0.0f;
+        }
+        for (int i = 0; i < promotions.size()-1; i++) {
+            if(seatAmount < promotions.get(i).getKey()){
+                return promotions.get(i-1).getValue();
+            }
+        }
+        return promotions.lastElement().getValue();
+    }
+
+    public Float getMargins(float basePrice){
+        if(hasOverride){
+            return overrideAmount;
+        }
+        return baseRate/100 * basePrice;
     }
 
     public void addPromotion(Pair<Integer,Float> promotion){

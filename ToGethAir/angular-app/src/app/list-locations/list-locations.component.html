@@ -1,4 +1,4 @@
-<p>list-locations works!</p>
+<!--<p>list-locations works!</p>-->
 
 <!--<ul>-->
 <!--  <li *ngFor="let location of locations">-->
@@ -16,16 +16,22 @@
 
 <table border="3">
   <tr>
+    <th>Code</th>
     <th>Name</th>
     <th>Country</th>
     <th>Region</th>
-    <th>Code</th>
   </tr>
   <tr *ngFor="let location of locations">
-  <th> {{location.name}}</th>
-  <th> {{location.country}}</th>
-  <th> {{location.region}}</th>
-  <th> {{location.code}}</th>
+    <th> {{location.code}}</th>
+    <th> {{location.name}}</th>
+    <th> {{location.country}}</th>
+    <th> {{location.region}}</th>
+    <th *ngIf="accessRoles.includes('canDeleteLocation')"><button (click)="deleteLocation(location)">delete</button></th>
   </tr>
 
 </table>
+
+<app-add-location *ngIf="this.accessRoles.includes('canAddLocation')" accessRoles="{{this.accessRoles}}" (eventEmitter)="refreshList()"  ></app-add-location>
+
+
+

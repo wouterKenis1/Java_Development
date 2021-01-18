@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
 import { Location } from '../models/Location';
+import {Flight} from '../models/Flight';
 
 @Injectable({providedIn: 'root'})
 export class AppService {
@@ -15,12 +16,12 @@ export class AppService {
 
 
   constructor(private http: HttpClient) {
-    this.articlesUrl = 'http://localhost:8080/';
   }
 
-  public getLocations(): Observable<Location[]> {
-    return this.http.get<Location[]>(this.articlesUrl + 'getAllLocations');
-  }
 
+//   public intercept(string url){
+//     // add auth token
+//     // return this.http.get<Flight[]>(url);
+// }
 
 }

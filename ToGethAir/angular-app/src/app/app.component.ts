@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-app';
+
+  access: string[] = [];
+
+  public getRolesFromLoginComponent(roles:string[]){
+    this.access = roles;
+    console.log(this.access);
+  }
 }

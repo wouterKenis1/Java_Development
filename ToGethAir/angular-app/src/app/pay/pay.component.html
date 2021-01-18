@@ -1,0 +1,18 @@
+<p>pay works!</p>
+
+<p>please choose your payment method:</p>
+
+<form (submit)="doPayment()">
+  <input type="radio" id="Commitment" value="Commitment" name="payMethod" (change)="changePayMethod()" [defaultChecked]="true">
+  <label for="Commitment">Commitment</label>
+  <input type="radio" id="Credit" value="Credit" name="payMethod" (change)="changePayMethod()">
+  <label for="Credit">Credit</label>
+
+  <input type="submit" value="submit">
+</form>
+
+<p>Total cost: {{this.data.price + this.data.margins}}</p>
+<p *ngIf="payByEndorsement===false">
+  Discount for paying by credit! <br/>
+  Discount included: {{this.data.price * 0.9 + this.data.margins}}
+</p>

@@ -22,5 +22,20 @@ public class LocationServiceImpl implements LocationService {
         locationDAO.addLocation(location);
     }
 
+    @Override
+    public void addLocation(int code, String name, String country, String region) {
+        Location location = new Location();
+        location.setCode(code);
+        location.setName(name);
+        location.setCountry(country);
+        location.setRegion(region);
+        locationDAO.addLocation(location);
+    }
+
+    @Override
+    public void deleteLocation(int locationCode) {
+        locationDAO.deleteLocation(locationCode);
+    }
+
 
 }

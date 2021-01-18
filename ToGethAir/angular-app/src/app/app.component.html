@@ -1,2 +1,15 @@
-<p> app works </p>
-<app-list-locations></app-list-locations>
+<!--<p> app works </p>-->
+
+
+
+<p>
+<br/><br/><br/><br/><br/><br/>
+</p>
+<app-login (submit)="getRolesFromLoginComponent(loginComponent.roles)" *ngIf='access.length===0' #loginComponent></app-login>
+
+
+<mat-tab-group *ngIf='access.length!==0'>
+  <mat-tab label="locations" *ngIf='access.includes("admin")'> <app-list-locations accessRoles="{{this.access}}"></app-list-locations> </mat-tab>
+  <mat-tab label="flights"> <app-list-flights-employee title="{{this.access}}"></app-list-flights-employee> </mat-tab>
+<!--  <mat-tab label="Third"> Content 3 </mat-tab>-->
+</mat-tab-group>

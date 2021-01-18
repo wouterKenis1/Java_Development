@@ -1,6 +1,6 @@
 package com.vdab.DAO;
 
-import com.vdab.App.User;
+import com.vdab.App.DataBaseAccess;
 import com.vdab.models.Location;
 import org.springframework.stereotype.Repository;
 
@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public class LocationDAOImpl implements LocationDAO {
-    final private String url = User.getUrl();
-    final private String pass = User.getPass();
-    final private String user = User.getUser();
+    final private String url = DataBaseAccess.getUrl();
+    final private String pass = DataBaseAccess.getPass();
+    final private String user = DataBaseAccess.getUser();
 
     @Override
     public List<Location> getAllLocations() {
@@ -48,7 +48,6 @@ public class LocationDAOImpl implements LocationDAO {
             Connection conn = DriverManager.getConnection(url, user, pass);
             {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
-
                 pstmt.setString(1,location.getName());
                 pstmt.setString(2,location.getCountry());
                 pstmt.setString(3,location.getRegion());
@@ -59,6 +58,21 @@ public class LocationDAOImpl implements LocationDAO {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void deleteLocation(int locationCode) {
+        String sql = "DELETE FROM locations WHERE code = ?";
+        try{
+            Connection conn = DriverManager.getConnection(url, user, pass);
+            {
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1,locationCode);
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //endregion

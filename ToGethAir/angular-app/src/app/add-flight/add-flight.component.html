@@ -1,0 +1,10 @@
+<form (submit)="submit(airline.value,from.valueAsNumber,to.valueAsNumber,
+departure.value,duration.valueAsNumber)">
+
+  <span>Airline</span> <input type="Text" #airline>
+  <span>From</span> <input type="number" #from>
+  <span>To</span> <input type="number" #to>
+  <span>Duration</span> <input type="datetime-local" #departure>
+  <span>Departure</span> <input type="number" step="0.01" #duration>
+  <button type="submit">submit</button>
+</form>

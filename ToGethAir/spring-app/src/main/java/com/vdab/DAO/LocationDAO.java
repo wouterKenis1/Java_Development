@@ -14,5 +14,7 @@ public interface LocationDAO {
     //region Add/Delete
     void addLocation(Location location);
 
+    void deleteLocation(int locationCode);
+
     //endregion
 }

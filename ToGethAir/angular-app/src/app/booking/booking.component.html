@@ -1,0 +1,39 @@
+<!--<p>booking works!</p>-->
+
+<p> {{this.tekstje}}</p>
+
+<table border="3">
+  <tr>
+    <th>ID</th>
+    <th>Airline</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Departure</th>
+    <th>Duration</th>
+    <th>AvailableSeats</th>
+  </tr>
+  <tr>
+    <th> {{this.flight.id}}</th>
+    <th> {{this.flight.airline}}</th>
+    <th> {{this.flight.departureLocationCode}}</th>
+    <th> {{this.flight.arrivalLocationCode}}</th>
+    <th> {{this.flight.departureTime}}</th>
+    <th> {{this.flight.duration}}</th>
+<!--    <th> {{this.flight.seatingInfo.getTotalSeats()}}</th>-->
+  </tr>
+</table>
+
+<table border="1">
+  <tr>
+    <th>Class</th>
+    <th>Seats</th>
+  </tr>
+<!--  <tr *ngFor="let class of flight.seatingInfo.ticketTypes; index as i">-->
+<!--    <th> {{class}}</th>-->
+<!--    <th> {{flight.seatingInfo.availableSeats[i]}}</th>-->
+<!--    <th> <form (submit)="tryToBook(class,seatAmountInput.valueAsNumber)">-->
+<!--      <input type="number" #seatAmountInput>-->
+<!--      <button> submit </button>-->
+<!--    </form></th>-->
+<!--  </tr>-->
+</table>
