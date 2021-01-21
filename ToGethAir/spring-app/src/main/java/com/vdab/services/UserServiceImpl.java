@@ -25,9 +25,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Iterable<Boolean> validateUser(String username, String password) {
-        List<Boolean> returnValue = new ArrayList<Boolean>() ;
-        returnValue.add(userDAO.validateUser(username,password));
-        return returnValue;
+    public boolean validateUser(String username, String password) {
+        return userDAO.validateUser(username,password);
     }
+
+    @Override
+    public boolean validateUserExists(String username){
+        List<User> users = (ArrayList<User>) getAllUsers();
+        for(User user : users){
+            if(user.getUsername() == username){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public void saveUser(User user){
+        userDAO.saveUser(user);
+    }
+
+    @Override
+    public void giveUserAccessRole(String username, String accessRole) {
+        // test if role is present to prevent double permissions
+        List<String> roles = (ArrayList<String>) getRolesForUser(username);
+        if(!roles.contains(accessRole)){
+            userDAO.insertRole(username, accessRole);
+        }
+    }
+
+    @Override
+    public void removeUserAccessRole(String username, String accessRole){
+        userDAO.deleteRole(username,accessRole);
+    }
+
 }

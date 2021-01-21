@@ -27,7 +27,7 @@ public class UserDAOImpl implements UserDAO {
         String sql = "SELECT * FROM users";
 
         try{
-            Connection conn = DriverManager.getConnection(url,user,pass);   //TODO: add table users
+            Connection conn = DriverManager.getConnection(url,user,pass);   //DONE: add table users
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
@@ -39,10 +39,6 @@ public class UserDAOImpl implements UserDAO {
                 Vector<String> accessRoles = new Vector<>();
                 accessRoles.addAll(getRoles(user.getUsername()));
                 user.setAccessRoles(accessRoles);
-
-                Vector<Integer> bookingIDs = new Vector<>();
-                bookingIDs.addAll(getBookingIDs(user.getUsername()));
-                user.setBookingIDs(bookingIDs);
 
                 users.add(user);
             }
@@ -56,13 +52,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<String> getRoles(String username) {
         List<String> accessRoles = new ArrayList<>();
-        String sql = "SELECT role FROM accessroles WHERE username = ?"; //TODO: add table accessroles
+        String sql = "SELECT role FROM accessroles WHERE username = ?"; //DONE: add table accessroles
 
         try{
             Connection conn = DriverManager.getConnection(url,user,pass);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,username);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()) {
                 accessRoles.add(rs.getString(1));
@@ -74,67 +70,22 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Integer> getBookingIDs(String username) {
-        List<Integer> bookingIDs = new ArrayList<>();
-        String sql = "SELECT bookingID FROM bookings WHERE username = ?"; //TODO: add field username to bookings
-
-        try{
-            Connection conn = DriverManager.getConnection(url,user,pass);
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,username);
-            ResultSet rs = pstmt.executeQuery(sql);
-
-            while(rs.next()) {
-                bookingIDs.add(rs.getInt(1));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return bookingIDs;
-    }
-
-    @Override
-    public List<Booking> getBookings(String username) {
-        List<Booking> bookings = new ArrayList<>();
-        String sql = "SELECT * FROM bookings WHERE username = ?"; //TODO: add field username to bookings
-
-        try{
-            Connection conn = DriverManager.getConnection(url,user,pass);
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,username);
-            ResultSet rs = pstmt.executeQuery(sql);
-
-            while(rs.next()) {
-                Booking booking = new Booking();
-
-                booking.setBookingID(rs.getInt("bookingid"));
-                booking.setFlightID(rs.getInt("flightid"));
-                booking.setSeatAmount((rs.getInt("seatamount")));
-                booking.setSeatCategory(rs.getString("seatcategory"));
-                booking.setBookingPrice(rs.getFloat("bookingprice"));
-                booking.setPaid(rs.getBoolean("ispaid"));
-
-                bookings.add(booking);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return bookings;
-    }
-
-    @Override
     public boolean validateUser(String username, String password) {
 
-        String sql = "SELECT password FROM users WHERE username = ?"; //TODO: add table users
+        String sql = "SELECT * FROM users WHERE username = ?"; //DONE: add table users
 
         try{
             Connection conn = DriverManager.getConnection(url,user,pass);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,username);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
 
-            String dataBasePassword = rs.getString(1);
-            return (User.hashPass(password) == dataBasePassword);
+            String dataBasePassword = "";
+            while(rs.next()){
+                dataBasePassword = rs.getString("password");
+            }
+            System.out.println(User.hashPass(password) + "|" + dataBasePassword);
+            return (User.hashPass(password).equals(dataBasePassword));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -158,13 +109,9 @@ public class UserDAOImpl implements UserDAO {
             pstmt.setString(2,user.getPassword());
             pstmt.executeUpdate();
             // save table accesssroles
-            pstmt = conn.prepareStatement(accessSql);
-            pstmt.setInt(1, getLastRolesIndex() + 1);
-            pstmt.setString(1,user.getUsername());
-            pstmt.setString(2,user.getPassword());
-            pstmt.executeUpdate();
-
-            // a new user should not have any bookings yet!
+            user.getAccessRoles().forEach(role ->{
+                insertRole(user.getUsername(),role);
+            });
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -195,8 +142,6 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
-
-
     int getLastRolesIndex(){
         String sql = "SELECT max(id) FROM accessroles";
         try{
@@ -210,10 +155,10 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1;
+        return 0;
     }
 
-    public void updateUserRoles(User user){
+    public void updateUserRoles(User user){ // better to use deleteRole/insertRole instead
 
         List<String> dataBaseRoles = getRoles(user.getUsername());
         List<String> userRoles = user.getAccessRoles();
@@ -232,7 +177,8 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    void deleteRole(String username, String role) {
+
+    public void deleteRole(String username, String role) {
         String deleteSql = "DELETE FROM accessroles " +
                 "WHERE username = ? AND role = ?";
         try {
@@ -248,7 +194,12 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    void insertRole(String username, String role){
+    @Override
+    public void overrideMargins(float overrideAmount) {
+
+    }
+
+    public void insertRole(String username, String role){   //NOTE: double permissions possible
         String deleteSql = "INSERT INTO accessroles (id,username,role)" +
                 " VALUES (?,?,?)";
         try {

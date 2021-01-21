@@ -19,43 +19,53 @@ public class BookingDAOImpl implements BookingDAO {
 
     @Autowired
     FlightDAO flightDAO;
+    @Autowired
+    UserDAO userDAO;
+
 
     @Override
     public void saveBooking(Booking booking) {
-        String sql = "INSERT INTO bookings (bookingid,flightid,seatamount,seatcategory,bookingprice,ispaid, username) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO bookings " +
+                "(bookingid,flightid,seatamount,seatcategory," +
+                "bookingprice,ispaid, username,paybyendorsement) " +
+                "VALUES (?,?,?,?,?,?,?,?)";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
             {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
-
-                pstmt.setInt(1,getLastID() + 1);
+                int id = getLastID() + 1;
+                pstmt.setInt(1,id);
                 pstmt.setInt(2,booking.getFlightID());
                 pstmt.setInt(3,booking.getSeatAmount());
                 pstmt.setString(4, booking.getSeatCategory());
                 pstmt.setFloat(5,booking.getBookingPrice());
                 pstmt.setBoolean(6, booking.isPaid());
                 pstmt.setString(7, booking.getUser());
+                pstmt.setBoolean(8,booking.isPayByEndorsement());
 
                 pstmt.executeUpdate();
 
                 flightDAO.reserveSeats(booking.getFlightID(), booking.getSeatCategory(), booking.getSeatAmount());
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void saveBooking(int flightID, int seatAmount, String seatCategory, float bookingPrice, boolean payByEndorsement, boolean isPaid){
+    @Override
+    public void saveBooking(int flightID, int seatAmount, String seatCategory, float bookingPrice, boolean payByEndorsement, boolean isPaid, String username){
         Booking booking = new Booking()
                 .setFlightID(flightID)
                 .setSeatAmount(seatAmount)
                 .setSeatCategory(seatCategory)
                 .setBookingPrice(bookingPrice)
                 .setPayByEndorsement(payByEndorsement)
-                .setPaid(isPaid);
+                .setPaid(isPaid)
+                .setUser(username);
         saveBooking(booking);
+
+
     }
 
     @Override
@@ -78,6 +88,7 @@ public class BookingDAOImpl implements BookingDAO {
                 booking.setBookingPrice(rs.getFloat("bookingprice"));
                 booking.setPaid(rs.getBoolean("ispaid"));
                 booking.setUser(rs.getString("username"));
+                booking.setPayByEndorsement(rs.getBoolean("payByEndorsement"));
 
                 bookings.add(booking);
             }
@@ -101,7 +112,7 @@ public class BookingDAOImpl implements BookingDAO {
         } catch(SQLException e){
             e.printStackTrace();
         }
-        return -1;
+        return 0;
     }
 
     @Override
@@ -124,6 +135,7 @@ public class BookingDAOImpl implements BookingDAO {
                 booking.setBookingPrice(rs.getFloat("bookingprice"));
                 booking.setPaid(rs.getBoolean("ispaid"));
                 booking.setUser(rs.getString("username"));
+                booking.setPayByEndorsement(rs.getBoolean("payByEndorsement"));
 
                 bookings.add(booking);
             }
@@ -154,6 +166,8 @@ public class BookingDAOImpl implements BookingDAO {
                 booking.setBookingPrice(rs.getFloat("bookingprice"));
                 booking.setPaid(rs.getBoolean("ispaid"));
                 booking.setUser(rs.getString("username"));
+                booking.setPayByEndorsement(rs.getBoolean("payByEndorsement"));
+
                 bookings.add(booking);
             }
         } catch (SQLException e) {
@@ -183,6 +197,8 @@ public class BookingDAOImpl implements BookingDAO {
                 booking.setBookingPrice(rs.getFloat("bookingprice"));
                 booking.setPaid(rs.getBoolean("ispaid"));
                 booking.setUser(rs.getString("username"));
+                booking.setPayByEndorsement(rs.getBoolean("payByEndorsement"));
+
 
                 bookings.add(booking);
             }
@@ -219,7 +235,8 @@ public class BookingDAOImpl implements BookingDAO {
     @Override
     public void updateBooking(Booking booking){
         String sql = "UPDATE bookings " +
-                "SET flightid = ?, seatamount = ?, seatcategory = ?, bookingprice = ?, ispaid = ?, username = ? " +
+                "SET flightid = ?, seatamount = ?, seatcategory = ?, bookingprice = ?," +
+                " ispaid = ?, username = ?, payByEndorsement = ? " +
                 "WHERE bookingid = ?";
         try{
             Connection conn = DriverManager.getConnection(url,user,pass);
@@ -231,7 +248,9 @@ public class BookingDAOImpl implements BookingDAO {
             st.setFloat(4,booking.getBookingPrice());
             st.setBoolean(5,booking.isPaid());
             st.setInt(6,booking.getBookingID());
-            st.setString(7,booking.getUser());
+            st.setBoolean(7, booking.isPayByEndorsement());
+            st.setString(8,booking.getUser());
+
 
             st.executeUpdate();
         } catch (SQLException e) {
@@ -239,15 +258,84 @@ public class BookingDAOImpl implements BookingDAO {
         }
     }
 
+    @Override
+    public int getBookingsAmount() {
+        String sql = "SELECT COUNT(bookingid) FROM bookings";
+        try{
+            Connection conn = DriverManager.getConnection(url,user,pass);
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int getAverageBookingPrice() {
+        String sql = "SELECT AVG(bookingprice) FROM bookings";
+        try{
+            Connection conn = DriverManager.getConnection(url,user,pass);
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int getMinBookingPrice() {
+        String sql = "SELECT MIN(bookingprice) FROM bookings";
+        try{
+            Connection conn = DriverManager.getConnection(url,user,pass);
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+
+    }
+
+    @Override
+    public int getMaxBookingPrice() {
+        String sql = "SELECT MAX(bookingprice) FROM bookings";
+        try{
+            Connection conn = DriverManager.getConnection(url,user,pass);
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public List<Booking> findBookingsByUsername(String username){
         List<Booking> bookings = new ArrayList<>();
-        String sql = "SELECT * FROM bookings WHERE username = ?";
+        String sql = "SELECT * FROM bookings WHERE username LIKE ?";
 
         try{
             Connection conn = DriverManager.getConnection(url,user,pass);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,username);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()){
                 Booking booking = new Booking();
@@ -259,6 +347,8 @@ public class BookingDAOImpl implements BookingDAO {
                 booking.setBookingPrice(rs.getFloat("bookingprice"));
                 booking.setPaid(rs.getBoolean("ispaid"));
                 booking.setUser(rs.getString("username"));
+                booking.setPayByEndorsement(rs.getBoolean("payByEndorsement"));
+
 
                 bookings.add(booking);
             }

@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface BookingDAO {
     void saveBooking(Booking booking);
-    void saveBooking(int flightID, int seatAmount, String seatCategory, float bookingPrice, boolean payByEndorsement, boolean isPaid);
+    void saveBooking(int flightID, int seatAmount, String seatCategory,
+                     float bookingPrice, boolean payByEndorsement, boolean isPaid, String username);
 
     List<Booking> getAllBookings();
     List<Booking> findBookingByFlightID(int flightID);
@@ -20,4 +21,9 @@ public interface BookingDAO {
     List<Booking> findBookingsByUsername(String username);
 
     void updateBooking(Booking booking);
+
+    int getBookingsAmount();
+    int getAverageBookingPrice();
+    int getMinBookingPrice();
+    int getMaxBookingPrice();
 }

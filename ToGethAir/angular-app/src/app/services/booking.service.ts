@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Flight} from '../models/Flight';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Booking} from '../models/Booking';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,16 @@ export class BookingService {
     this.articlesUrl = 'http://localhost:8080/booking/';
   }
 
+  public getAllBookings(): Observable<Booking[]>{
+    return this.http.get<Booking[]>(this.articlesUrl + 'getAllBookings');
+  }
+
+  public findBookingsForUser(username: string): Observable<Booking[]>{
+    let params = new HttpParams()
+      .set("username",username)
+    return this.http.get<Booking[]>(this.articlesUrl + 'findBookingsForUser', {params: params});
+  }
+
   public getPriceForBooking(flight: Flight, type: string, amount: number): Observable<number[]> {
     let params = new HttpParams()
       .set("flightID",String(flight.id))
@@ -30,18 +41,25 @@ export class BookingService {
     return this.http.get<number[]>(this.articlesUrl + 'getPriceForBooking',{params: params});
   }
 
-  public saveBooking(flightID:number, seatAmount:number, seatCategory:string, bookingPrice:number,
-                     payByEndorsement:boolean, isPaid:boolean ): Observable<boolean>{
 
-    let params = new HttpParams()
-      .set("flightID", String(flightID))
-      .set("seatAmount", String(seatAmount))
-      .set("seatCategory", seatCategory)
-      .set("bookingPrice", String(bookingPrice))
-      .set("payByEndorsement",String(payByEndorsement))
-      .set("isPaid",String(isPaid));
+  public saveBooking(booking: Booking): Observable<boolean>{
+    return this.http.post<boolean>(this.articlesUrl + 'saveBooking', booking);
+  }
 
-    return this.http.get<boolean>(this.articlesUrl + 'createBooking',{params: params});
+  public getBookingsAmount(): Observable<number>{
+    return this.http.get<number>(this.articlesUrl + 'getBookingsAmount');
+  }
+
+  public getAverageBookingPrice(): Observable<number>{
+    return this.http.get<number>(this.articlesUrl + 'getAverageBookingPrice');
+  }
+
+  public getMinBookingPrice(): Observable<number>{
+    return this.http.get<number>(this.articlesUrl + 'getMinBookingPrice');
+  }
+
+  public getMaxBookingPrice(): Observable<number>{
+    return this.http.get<number>(this.articlesUrl + 'getMaxBookingPrice');
   }
 
 

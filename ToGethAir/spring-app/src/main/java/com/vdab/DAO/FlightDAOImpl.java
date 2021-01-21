@@ -70,18 +70,18 @@ public class FlightDAOImpl implements FlightDAO {
 
     public void updateSeatingInfo(Flight flight){
         String sql = "UPDATE seatinginfos " +
-                "SET flightclass = ?, availableseats = ? " +
-                "WHERE flightid = ?";
+                "SET availableseats = ? " +
+                "WHERE flightid = ? AND flightclass = ?";
 
         Map<String, Integer> seatingInfo = flight.getSeatingInfo();
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
             {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setInt(3,flight.getId());
+                pstmt.setInt(2,flight.getId());
                 for (var x : seatingInfo.entrySet()){
-                    pstmt.setString(1,x.getKey());
-                    pstmt.setInt(2,x.getValue());
+                    pstmt.setString(3,x.getKey());
+                    pstmt.setInt(1,x.getValue());
                     pstmt.executeUpdate();
                 }
             }
@@ -109,7 +109,7 @@ public class FlightDAOImpl implements FlightDAO {
                 flight.setId(rs.getInt("flightid"));
                 flight.setAirline(rs.getString("airline"));
                 flight.setDuration(rs.getFloat("duration"));
-                flight.setDepartureTime(rs.getTimestamp("departuretime"));
+                flight.setDepartureTime( rs.getTimestamp("departuretime").toLocalDateTime());
                 flight.setDepartureLocationCode(rs.getInt("departurelocationcode"));
                 flight.setArrivalLocationCode(rs.getInt("arrivallocationcode"));
 
@@ -144,7 +144,7 @@ public class FlightDAOImpl implements FlightDAO {
                 flight.setId(rs.getInt("flightid"));
                 flight.setAirline(rs.getString("airline"));
                 flight.setDuration(rs.getFloat("duration"));
-                flight.setDepartureTime(rs.getTimestamp("departuretime"));
+                flight.setDepartureTime(rs.getTimestamp("departuretime").toLocalDateTime());
                 flight.setDepartureLocationCode(rs.getInt("departurelocationcode"));
                 flight.setArrivalLocationCode(rs.getInt("arrivallocationcode"));
                 PricingInfo pricingInfo = pricingInfoDAO.getPricingInfo(flight.getId());
@@ -179,7 +179,7 @@ public class FlightDAOImpl implements FlightDAO {
                 flight.setId(rs.getInt("flightid"));
                 flight.setAirline(rs.getString("airline"));
                 flight.setDuration(rs.getFloat("duration"));
-                flight.setDepartureTime(rs.getTimestamp("departuretime"));
+                flight.setDepartureTime(rs.getTimestamp("departuretime").toLocalDateTime());
                 flight.setDepartureLocationCode(rs.getInt("departurelocationcode"));
                 flight.setArrivalLocationCode(rs.getInt("arrivallocationcode"));
                 PricingInfo pricingInfo = pricingInfoDAO.getPricingInfo(flight.getId());
@@ -221,15 +221,15 @@ public class FlightDAOImpl implements FlightDAO {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1,flight.getAirline());
                 pstmt.setFloat(2,flight.getDuration());
-                pstmt.setTimestamp(3,flight.getDepartureTime());
+                pstmt.setTimestamp(3,Timestamp.valueOf(flight.getDepartureTime()));
                 pstmt.setInt(4,flight.getDepartureLocationCode());
                 pstmt.setInt(5,flight.getArrivalLocationCode());
                 pstmt.setInt(6,getLastID() + 1);
                 pstmt.executeUpdate();
 
                 // do these separately
-                //saveSeatingInfo(flight);
-                //pricingInfoDAO.savePricingInfo(flight.getPricingInfo());
+                saveSeatingInfo(flight);
+                pricingInfoDAO.savePricingInfo(flight.getPricingInfo());
 
             }
         } catch (SQLException e) {
@@ -254,7 +254,7 @@ public class FlightDAOImpl implements FlightDAO {
 
             pstmt.setString(1, flight.getAirline());
             pstmt.setFloat(2,flight.getDuration());
-            pstmt.setTimestamp(3,flight.getDepartureTime());
+            pstmt.setTimestamp(3,Timestamp.valueOf(flight.getDepartureTime()));
             pstmt.setInt(4,flight.getDepartureLocationCode());
             pstmt.setInt(5,flight.getArrivalLocationCode());
             pstmt.setInt(6,flight.getId());
@@ -307,6 +307,6 @@ public class FlightDAOImpl implements FlightDAO {
         } catch(SQLException e){
             e.printStackTrace();
         }
-        return -1;
+        return 0;
     }
 }

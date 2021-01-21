@@ -1,10 +1,18 @@
-<form (submit)="submit(airline.value,from.valueAsNumber,to.valueAsNumber,
-departure.value,duration.valueAsNumber)">
+<!--<form (submit)="submit(airline.value,from.valueAsNumber,to.valueAsNumber,-->
+<!--departure.value,duration.valueAsNumber)">-->
+<!--  <span>Airline</span> <input type="Text" #airline>-->
+<!--  <span>From</span> <input type="number" #from>-->
+<!--  <span>To</span> <input type="number" #to>-->
+<!--  <span>Duration</span> <input type="datetime-local" #departure>-->
+<!--  <span>Departure</span> <input type="number" step="0.01" #duration>-->
+<!--</form>-->
 
-  <span>Airline</span> <input type="Text" #airline>
-  <span>From</span> <input type="number" #from>
-  <span>To</span> <input type="number" #to>
-  <span>Duration</span> <input type="datetime-local" #departure>
-  <span>Departure</span> <input type="number" step="0.01" #duration>
-  <button type="submit">submit</button>
-</form>
+<br/><br/>
+  <span>Airline</span> <input type="Text" (change)="flight.airline=airline.value" #airline>
+  <span>From</span> <input type="number" (change)="flight.departureLocationCode=from.valueAsNumber" #from>
+  <span>To</span> <input type="number" (change)="flight.arrivalLocationCode=to.valueAsNumber" #to>
+  <span>Departure</span> <input type="datetime-local" (change)="flight.departureTime=departure.value" #departure>
+  <span>Duration</span> <input type="number" step="0.01" (change)="flight.duration=duration.valueAsNumber" #duration>
+  <button (click)="logFlight()">show</button>
+  <button (click)="this.openDialog()">add class</button>
+  <button (click)="submit()">submit</button>

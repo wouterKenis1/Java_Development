@@ -7,15 +7,15 @@ public class Booking {
     String seatCategory = "";
     float bookingPrice = 0.0f;
     boolean isPaid = false;
-    boolean payByEndorsement = false;
+    boolean isPayByEndorsement = false;
     String user = "";
 
     public boolean isPayByEndorsement() {
-        return payByEndorsement;
+        return isPayByEndorsement;
     }
 
     public Booking setPayByEndorsement(boolean payByEndorsement) {
-        this.payByEndorsement = payByEndorsement;
+        this.isPayByEndorsement = payByEndorsement;
         return this;
     }
 

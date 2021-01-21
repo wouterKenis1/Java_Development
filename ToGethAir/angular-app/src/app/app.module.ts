@@ -18,6 +18,13 @@ import { BookingComponent } from './booking/booking.component';
 import { PayComponent } from './pay/pay.component';
 import { AddLocationComponent } from './add-location/add-location.component';
 import { AddFlightComponent } from './add-flight/add-flight.component';
+import { AddClassComponent } from './add-flight/add-class/add-class.component';
+import { ReportingComponent } from './reporting/reporting.component';
+import { ListBookingsComponent } from './list-bookings/list-bookings.component';
+import { RegisterComponent } from './register/register.component';
+import { ListUserComponent } from './list-user/list-user.component';
+import { AddRoleComponent } from './list-user/add-role/add-role.component';
+import { DeleteRoleComponent } from './list-user/delete-role/delete-role.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +35,14 @@ import { AddFlightComponent } from './add-flight/add-flight.component';
         BookingComponent,
         PayComponent,
         AddLocationComponent,
-        AddFlightComponent
+        AddFlightComponent,
+        AddClassComponent,
+        ReportingComponent,
+        ListBookingsComponent,
+        RegisterComponent,
+        ListUserComponent,
+        AddRoleComponent,
+        DeleteRoleComponent
     ],
   imports: [
     BrowserModule,

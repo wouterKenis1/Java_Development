@@ -67,4 +67,13 @@ public class PricingInfo {
     public void setFlightID(int flightID) {
         this.flightID = flightID;
     }
+
+    @Override
+    public String toString() {
+        return "PricingInfo{" +
+                "flightID=" + flightID +
+                ", basePrices=" + basePrices +
+                ", promotions=" + promotions +
+                '}';
+    }
 }

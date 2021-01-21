@@ -1,6 +1,7 @@
-export interface PricingInfo{
+export class PricingInfo{
   flightid: number;
-  basePrises: object[];
-  promotions: object[];
+  // basePrises: Map<string,number> = new Map<string, number>();
+  basePrices: {} = {}
+  promotions: object[] = [];
 
 }

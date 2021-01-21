@@ -1,0 +1,25 @@
+
+
+<table border="3">
+  <tr>
+    <th>Airline</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Departure</th>
+    <th>Duration</th>
+  </tr>
+  <tr>
+    <th> {{data.airline}}</th>
+    <th> {{data.departureLocationCode}}</th>
+    <th> {{data.arrivalLocationCode}}</th>
+    <th> {{data.departureTime}}</th>
+    <th> {{data.duration}}</th>
+  </tr>
+</table>
+
+<form (submit)="submit(className.value,availableSeats.valueAsNumber,basePrice.valueAsNumber)">
+  Class: <input type="text" #className> <br/>
+  Available seats: <input type="number" #availableSeats> <br/>
+  Base price: <input type="number" step="0.01" #basePrice> <br/>
+  <button type="submit">submit</button> <br/>
+</form>

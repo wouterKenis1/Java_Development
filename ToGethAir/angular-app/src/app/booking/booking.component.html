@@ -10,7 +10,7 @@
     <th>To</th>
     <th>Departure</th>
     <th>Duration</th>
-    <th>AvailableSeats</th>
+
   </tr>
   <tr>
     <th> {{this.flight.id}}</th>
@@ -19,7 +19,6 @@
     <th> {{this.flight.arrivalLocationCode}}</th>
     <th> {{this.flight.departureTime}}</th>
     <th> {{this.flight.duration}}</th>
-<!--    <th> {{this.flight.seatingInfo.getTotalSeats()}}</th>-->
   </tr>
 </table>
 
@@ -28,7 +27,19 @@
     <th>Class</th>
     <th>Seats</th>
   </tr>
-<!--  <tr *ngFor="let class of flight.seatingInfo.ticketTypes; index as i">-->
+  <tr *ngFor="let seating of flight.seatingInfo | keyvalue">
+    <th> {{seating.key}}</th>
+    <th> {{seating.value}}</th>
+    <th>
+      <form (submit)="tryToBook(seating.key,seatAmountInput.valueAsNumber)">
+        <input type="number" #seatAmountInput>
+        <button> submit </button>
+      </form>
+    </th>
+
+  </tr>
+
+  <!--  <tr *ngFor="let class of flight.seatingInfo.ticketTypes; index as i">-->
 <!--    <th> {{class}}</th>-->
 <!--    <th> {{flight.seatingInfo.availableSeats[i]}}</th>-->
 <!--    <th> <form (submit)="tryToBook(class,seatAmountInput.valueAsNumber)">-->

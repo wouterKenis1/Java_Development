@@ -1,0 +1,28 @@
+<!--<p>list-bookings works!</p>-->
+
+<!--<p>listing bookings for: {{this.username}}</p>-->
+
+<input type="text" (change)="searchName=inputSearch.value" #inputSearch *ngIf="accessRoles.includes('admin')">
+<button (click)="updateBookings()">refresh</button>
+
+<table border="3">
+  <tr>
+    <th>bookingID</th>
+    <th>flightID</th>
+    <th>seatAmount</th>
+    <th>seatCategory</th>
+    <th>bookingPrice</th>
+    <th>is paid</th>
+    <th>pay by endorsement</th>
+  </tr>
+  <tr *ngFor="let booking of bookings">
+    <th> {{booking.bookingID}}</th>
+    <th> {{booking.flightID}}</th>
+    <th> {{booking.seatAmount}}</th>
+    <th> {{booking.seatCategory}}</th>
+    <th> {{booking.bookingPrice}}</th>
+    <th> {{booking.paid}}</th>
+    <th> {{booking.payByEndorsement}}</th>
+  </tr>
+</table>
+

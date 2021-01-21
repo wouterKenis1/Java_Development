@@ -1,6 +1,7 @@
 package com.vdab.models;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 import javafx.util.Pair;
@@ -8,7 +9,7 @@ import javafx.util.Pair;
 public class Flight {
 
     int id;
-    Timestamp departureTime;
+    LocalDateTime departureTime;
     float duration;
     PricingInfo pricingInfo;
     Map<String,Integer> seatingInfo; // amount of available seats by category
@@ -16,70 +17,76 @@ public class Flight {
     int departureLocationCode;
     int arrivalLocationCode;
 
+    public int getId() {
+        return id;
+    }
 
-    public Timestamp getDepartureTime() {
+    public Flight setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public LocalDateTime getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Timestamp departureTime) {
+    public Flight setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
+        return this;
     }
 
     public float getDuration() {
         return duration;
     }
 
-    public void setDuration(float duration) {
+    public Flight setDuration(float duration) {
         this.duration = duration;
+        return this;
     }
 
     public PricingInfo getPricingInfo() {
         return pricingInfo;
     }
 
-    public void setPricingInfo(PricingInfo pricingInfo) {
+    public Flight setPricingInfo(PricingInfo pricingInfo) {
         this.pricingInfo = pricingInfo;
+        return this;
     }
 
     public Map<String, Integer> getSeatingInfo() {
         return seatingInfo;
     }
 
-    public void setSeatingInfo(Map<String, Integer> seatingInfo) {
+    public Flight setSeatingInfo(Map<String, Integer> seatingInfo) {
         this.seatingInfo = seatingInfo;
+        return this;
     }
-
 
     public String getAirline() {
         return airline;
     }
 
-    public void setAirline(String airline) {
+    public Flight setAirline(String airline) {
         this.airline = airline;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        return this;
     }
 
     public int getDepartureLocationCode() {
         return departureLocationCode;
     }
 
-    public void setDepartureLocationCode(int departureLocationCode) {
+    public Flight setDepartureLocationCode(int departureLocationCode) {
         this.departureLocationCode = departureLocationCode;
+        return this;
     }
 
     public int getArrivalLocationCode() {
         return arrivalLocationCode;
     }
 
-    public void setArrivalLocationCode(int arrivalLocationCode) {
+    public Flight setArrivalLocationCode(int arrivalLocationCode) {
         this.arrivalLocationCode = arrivalLocationCode;
+        return this;
     }
 
     // TODO: move this function to somewhere else
@@ -110,5 +117,18 @@ public class Flight {
         costs *= 1 - (pricingInfo.promotions.get(promotionSelector).getValue()) / 100;
 
         return costs;
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "departureTime=" + departureTime +
+                ", duration=" + duration +
+                ", pricingInfo=" + pricingInfo +
+                ", seatingInfo=" + seatingInfo +
+                ", airline='" + airline + '\'' +
+                ", departureLocationCode=" + departureLocationCode +
+                ", arrivalLocationCode=" + arrivalLocationCode +
+                '}';
     }
 }

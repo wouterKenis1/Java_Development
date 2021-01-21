@@ -55,6 +55,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public Iterable<Booking> findBookingsByUsername(String username) {
+        return bookingDAO.findBookingsByUsername(username);
+    }
+
+    @Override
     public Pair<Float, Float> calculatePrice(int flightID, String type, int amount) {
         System.out.println(type);
         Flight flight = flightDAO.getFlightByID(flightID);
@@ -67,19 +72,42 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void saveBooking(Booking booking) {
+    public boolean saveBooking(Booking booking) {
         bookingDAO.saveBooking(booking);
+        return true;
     }
 
     @Override
-    public boolean createBooking(int flightID, int seatAmount, String seatCategory, float bookingPrice, boolean payByEndorsement, boolean isPaid) {
+    public boolean createBooking(int flightID, int seatAmount, String seatCategory, float bookingPrice,
+                                 boolean payByEndorsement, boolean isPaid, String username) {
         Flight flight = flightDAO.getFlightByID(flightID);
         int availableSeats = flight.getSeatingInfo().get(seatCategory);
         if(availableSeats < seatAmount || seatAmount < 0){
             return false;
         }
-        bookingDAO.saveBooking(flightID,seatAmount,seatCategory,bookingPrice,payByEndorsement,isPaid);
+        bookingDAO.saveBooking(flightID,seatAmount,seatCategory,
+                bookingPrice,payByEndorsement,isPaid, username);
         return true;
+    }
+
+    @Override
+    public int getBookingsAmount() {
+        return bookingDAO.getBookingsAmount();
+    }
+
+    @Override
+    public int getAverageBookingPrice() {
+        return bookingDAO.getAverageBookingPrice();
+    }
+
+    @Override
+    public int getMinBookingPrice() {
+        return bookingDAO.getMinBookingPrice() ;
+    }
+
+    @Override
+    public int getMaxBookingPrice() {
+        return bookingDAO.getMaxBookingPrice();
     }
 
 

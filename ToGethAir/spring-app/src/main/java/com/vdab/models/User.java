@@ -5,7 +5,6 @@ import java.util.Vector;
 public class User {
     String username;
     String password;
-    Vector<Integer> bookingIDs;
     Vector<String> accessRoles;
 
     public static String hashPass(String passwordToHash){
@@ -30,14 +29,6 @@ public class User {
         return this;
     }
 
-    public Vector<Integer> getBookingIDs() {
-        return bookingIDs;
-    }
-
-    public User setBookingIDs(Vector<Integer> bookingIDs) {
-        this.bookingIDs = bookingIDs;
-        return this;
-    }
 
     public Vector<String> getAccessRoles() {
         return accessRoles;

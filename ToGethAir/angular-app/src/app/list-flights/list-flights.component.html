@@ -1,7 +1,7 @@
 <!--<p>list-flights-employee works!</p>-->
 <!--<div *ngIf="title.includes('lol')">lol included in title</div>-->
 <!--<div *ngIf="title.includes('nice')">nice included in title</div>-->
-
+<button (click)="this.updateFlights()">Refresh Flights</button>
 <table border="3" *ngIf="filteredFlights">
   <tr>
     <th>ID</th>
@@ -10,18 +10,16 @@
     <th>To</th>
     <th>Departure</th>
     <th>Duration</th>
-    <th>AvailableSeats</th>
     <th *ngIf="title.includes('bookingEnabled')"> book now!</th>
 <!--    TODO: update seatingInfo / PricingInfo-->
   </tr>
-  <tr *ngFor="let flight of filteredFlights">
+  <tr *ngFor="let flight of filteredFlights" >
     <th> {{flight.id}}</th>
     <th> {{flight.airline}}</th>
     <th> {{flight.departureLocationCode}}</th>
     <th> {{flight.arrivalLocationCode}}</th>
     <th> {{flight.departureTime}}</th>
     <th> {{flight.duration}}</th>
-    <th> {{this.getTotalSeats(flight)}}</th>
     <th *ngIf="title.includes('bookingEnabled')">
       <button mat-raised-button (click)="openDialog(flight)">Pick one</button>
       click here to book</th>

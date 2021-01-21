@@ -1,0 +1,38 @@
+
+This document is meant to give more information about roles and permissions:
+Please refer to this document whenever changing roles, names and/or permissions
+
+NOTE: any+ means you have to have at least one role. Please grant users at least one role on registration
+//TODO: give dummy role on registration
+------------------------------------------
+roles
+---
+admin
+canDeleteLocation
+canAddLocation
+bookingEnabled
+canAddFlight
+user
+------------------------------------------
+role                || enables
+------------------------------------------
+
+
+1) app: html
+admin               || users, locations, stats
+any+                || bookings, flights
+
+2) list-locations: html
+canDeleteLocation   || delete location
+canAddLocation      || add location
+
+3) list-flights: html
+bookingEnabled      || can book flight
+canAddFlight        || add flight
+
+4) list-bookings:html
+admin               || search box (see 5)
+
+5) list-bookings:ts
+admin               || search 'all bookings' or bookings of user given by search box (see 4)
+

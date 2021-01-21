@@ -34,10 +34,19 @@ export class FlightService {
       .set("departure", String(departure))
       .set("duration",String(duration))
 
-    let flight: Flight;
+    //let flight: Flight;
+
     //console.log(params);
     return this.http.get(this.articlesUrl + 'createFlight',{params: params});
 
-    return this.http.post(this.articlesUrl + 'saveFlight',flight);
+    //return this.http.post(this.articlesUrl + 'saveFlight',flight);
+  }
+
+  public createFlight(flight:Flight):Observable<Flight> {
+
+    console.log(flight);
+
+
+    return this.http.post<Flight>(this.articlesUrl + 'saveFlight',flight);
   }
 }

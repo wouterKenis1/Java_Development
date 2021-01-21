@@ -1,15 +1,24 @@
 <!--<p> app works </p>-->
 
+<div *ngIf="access.length!==0">
+  logged on as: {{this.username}}
+  <button (click)="access=[]">Logout</button>
+</div>
 
 
 <p>
 <br/><br/><br/><br/><br/><br/>
 </p>
-<app-login (submit)="getRolesFromLoginComponent(loginComponent.roles)" *ngIf='access.length===0' #loginComponent></app-login>
 
+
+
+<app-login (loginEventEmitter)="getFromLoginComponent(loginComponent.username,loginComponent.roles)" *ngIf='access.length===0' #loginComponent></app-login>
+<app-register *ngIf="access.length===0"></app-register>
 
 <mat-tab-group *ngIf='access.length!==0'>
-  <mat-tab label="locations" *ngIf='access.includes("admin")'> <app-list-locations accessRoles="{{this.access}}"></app-list-locations> </mat-tab>
-  <mat-tab label="flights"> <app-list-flights-employee title="{{this.access}}"></app-list-flights-employee> </mat-tab>
-<!--  <mat-tab label="Third"> Content 3 </mat-tab>-->
+  <mat-tab label="Users" *ngIf='access.includes("admin")'> <app-list-user></app-list-user> </mat-tab>
+  <mat-tab label="Bookings"> <app-list-bookings username="{{this.username}}" accessRoles="{{this.access}}"></app-list-bookings> </mat-tab>
+  <mat-tab label="Locations" *ngIf='access.includes("admin")'> <app-list-locations accessRoles="{{this.access}}" ></app-list-locations> </mat-tab>
+  <mat-tab label="Flights"> <app-list-flights-employee title="{{this.access}}" username="{{this.username}}"></app-list-flights-employee> </mat-tab>
+  <mat-tab label="Stats" *ngIf='access.includes("admin")'> <app-reporting accessRoles="{{this.access}}" username="{{this.username}}"></app-reporting> </mat-tab>
 </mat-tab-group>

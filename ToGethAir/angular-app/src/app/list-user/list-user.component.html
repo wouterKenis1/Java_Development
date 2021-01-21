@@ -1,0 +1,13 @@
+
+<button (click)="this.updateUsers()">refresh</button>
+
+<table border="3">
+  <tr *ngFor="let user of users | keyvalue">
+    <th> <button (click)="openDialogAddRole(user.key)">add role</button></th>
+    <th> <button (click)="openDialogDeleteRole(user.key)">remove role</button></th>
+    <th>{{user.key}}</th>
+    <th *ngFor="let role of user.value">{{role}}</th>
+  </tr>
+
+</table>
+

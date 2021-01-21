@@ -17,10 +17,16 @@ public interface BookingService {
     Iterable<Booking> findBookingsByLocation(int locationCode);
     Iterable<Booking> findBookingsByDate(Timestamp date);
     Iterable<Booking> findBookingsByAirline(String airline);
+    Iterable<Booking> findBookingsByUsername(String username);
 
     Pair<Float,Float> calculatePrice(int flightID,String type, int amount);
 
-    void saveBooking(Booking booking);
-    boolean createBooking(int flightID,int seatAmount,String seatCategory,float bookingPrice,boolean payByEndorsement,boolean isPaid);
+    boolean saveBooking(Booking booking);
+    boolean createBooking(int flightID,int seatAmount,String seatCategory,float bookingPrice,
+                          boolean payByEndorsement,boolean isPaid, String username);
 
+    int getBookingsAmount();
+    int getAverageBookingPrice();
+    int getMinBookingPrice();
+    int getMaxBookingPrice();
 }

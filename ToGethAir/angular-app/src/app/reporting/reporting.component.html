@@ -1,0 +1,30 @@
+<p>reporting works!</p>
+
+<h3>Bookings:</h3>
+
+<table border="3">
+  <tr>
+    <th>bookingID</th>
+    <th>flightID</th>
+    <th>seatType</th>
+    <th>seatAmount</th>
+    <th>isPaid</th>
+    <th>bookingPrice</th>
+  </tr>
+  <tr *ngFor="let booking of this.bookings">
+    <th>{{booking.bookingID}}</th>
+    <th>{{booking.flightID}}</th>
+    <th>{{booking.seatCategory}}</th>
+    <th>{{booking.seatAmount}}</th>
+    <th *ngIf="booking.paid == true">Yes</th>
+    <th *ngIf="booking.paid != true">No</th>
+    <th>{{booking.bookingPrice}}</th>
+  </tr>
+</table>
+
+<h4>Number of bookings: {{this.bookingAmount}}</h4>
+<h4>Average of bookingPrice: {{this.priceAverage}}</h4>
+<h4>Min. of BookingPrices: {{this.priceMin}}</h4>
+<h4>Max. of BookingPrices: {{this.priceMax}}</h4>
+
+<button (click)="this.updateValues()">updateValues</button>

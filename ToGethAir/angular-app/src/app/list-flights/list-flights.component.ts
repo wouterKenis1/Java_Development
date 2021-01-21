@@ -19,6 +19,7 @@ export class ListFlightsComponent implements OnInit {
   flightInfo: string;
 
   @Input() title: string[];
+  @Input() username: string;
 
   constructor(
     private flightService: FlightService,
@@ -29,26 +30,9 @@ export class ListFlightsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.flightService.getFlights().subscribe(flights => {
-      //this.flightInfo = JSON.stringify(flights);
-
-      this.flights = flights;
-      this.filteredFlights = this.flights;
-
-      // flights.forEach(( flight,flightNr) => { // cast json to seatingInfo
-      //   // only tested on 1 element; TODO: test with multiple categories
-      //   let temp =JSON.stringify(flight.seatingInfo);        // to json
-      //   temp = temp.substr(1,temp.length-2);     // remove outer brackets
-      //   let temp2 = temp.split(':');                //  split key and value
-      //
-      //   let seatingInfo = new SeatingInfo();
-      //   seatingInfo.ticketTypes.push(temp2[0].substr(1,temp2[0].length-2));
-      //
-      //   seatingInfo.availableSeats.push(parseInt(temp2[1]));
-      //   this.flights[flightNr].seatingInfo = seatingInfo;
-      // })
-    });
+    this.updateFlights();
   }
+
 
   filterAirline(searchtext: string): void{
     this.flights.forEach(flight =>{
@@ -68,7 +52,7 @@ export class ListFlightsComponent implements OnInit {
     console.log(flight);
     const dialogRef = this.dialog.open(BookingComponent,{
       // width: '250px',
-      data: {flight: flight, tekstje: "hoi"}
+      data: {flight: flight, username: this.username}
     });
 
     dialogRef.afterClosed().subscribe(result =>{
@@ -81,30 +65,7 @@ export class ListFlightsComponent implements OnInit {
       this.flightInfo = JSON.stringify(flights);
       this.flights = flights;
       this.filteredFlights = this.flights;
-      // flights.forEach(( flight,flightNr) => {
-      //
-      //   // only tested on 1 element; TODO: test with multiple categories
-      //   let temp =JSON.stringify(flight.seatingInfo);        // to json
-      //   temp = temp.substr(1,temp.length-2);     // remove outer brackets
-      //   let temp2 = temp.split(':');                //  split key and value
-      //
-      //   let seatingInfo = new SeatingInfo();
-      //   seatingInfo.ticketTypes.push(temp2[0]);
-      //   seatingInfo.availableSeats.push(parseInt(temp2[1]));
-      //   this.flights[flightNr].seatingInfo = seatingInfo;
-      // })
+
     });
   }
-
-  public getTotalSeats(flight: Flight): number{
-    let count = 0;
-    console.log(flight);
-    //console.log(flight.seatingInfo.get("buissness"));
-    for (let entry of flight.seatingInfo.entries()) {
-      count += entry[1];
-    }
-    // flight.seatingInfo.forEach(value => {count += value;})
-    return count;
-  }
-
 }

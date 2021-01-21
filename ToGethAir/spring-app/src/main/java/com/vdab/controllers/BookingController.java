@@ -1,5 +1,6 @@
 package com.vdab.controllers;
 
+import com.vdab.models.Booking;
 import com.vdab.services.BookingService;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,22 @@ public class BookingController {
     BookingService bookingService;
 
     // region getters
+    @RequestMapping(value="/getAllBookings",method = RequestMethod.GET)
+    public Iterable<Booking> getAllBookings(){
+        return bookingService.getAllBookings();
+    }
+
+    @RequestMapping(value="/findBookingsForUser",method = RequestMethod.GET)
+    public Iterable<Booking> findBookingsForUser(@RequestParam String username){
+        System.out.println("find bookings for: " + username);
+        Iterable<Booking> bookings = bookingService.findBookingsByUsername(username);
+        bookings.forEach(booking -> {
+            System.out.println(booking.getBookingID() + ": " + booking.isPaid() + " "+ booking.isPayByEndorsement());
+        });
+        return bookings;
+    }
+
+
     @RequestMapping(value="/getPriceForBooking",method = RequestMethod.GET)
     public Iterable<Float> getPriceForBooking(@RequestParam int amount, @RequestParam int flightID,
                                               @RequestParam String type){
@@ -28,6 +45,24 @@ public class BookingController {
         Iterable<Float> returnIterable = list;
         return returnIterable;
     }
+
+    @RequestMapping(value="/getBookingsAmount",method = RequestMethod.GET)
+    public int getBookingsAmount(){
+        return bookingService.getBookingsAmount();
+    }
+    @RequestMapping(value="/getAverageBookingPrice",method = RequestMethod.GET)
+    public int getAverageBookingPrice(){
+        return bookingService.getAverageBookingPrice();
+    }
+    @RequestMapping(value="/getMinBookingPrice",method = RequestMethod.GET)
+    public int getMinBookingPrice(){
+        return bookingService.getMinBookingPrice();
+    }
+    @RequestMapping(value="/getMaxBookingPrice",method = RequestMethod.GET)
+    public int getMaxBookingPrice(){
+        return bookingService.getMaxBookingPrice();
+    }
+
     // endregion
 
 
@@ -39,7 +74,12 @@ public class BookingController {
 
         System.out.println("saveBooking request made");
         return bookingService.createBooking(flightID,seatAmount,seatCategory,bookingPrice,
-                payByEndorsement,isPaid);
+                payByEndorsement,isPaid,"");
+    }
+
+    @RequestMapping(value = "/saveBooking", method = RequestMethod.POST)
+    public boolean saveBooking(@RequestBody Booking booking){
+        return bookingService.saveBooking(booking);
     }
     // endregion
 
